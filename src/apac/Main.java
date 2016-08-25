@@ -9,7 +9,6 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         try {
-//            BufferedReader bfr = new BufferedReader(new FileReader(new File("resource/B-large-practice.in")));
             Scanner scanner = new Scanner(new FileInputStream(new File("resource/A-large-practice.in")));
             BufferedWriter bfw = new BufferedWriter(new FileWriter(new File("resource/AL.out")));
             int k = 0;
