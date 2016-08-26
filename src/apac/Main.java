@@ -9,28 +9,18 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         try {
-            Scanner scanner = new Scanner(new FileInputStream(new File("resource/A-large-practice.in")));
-            BufferedWriter bfw = new BufferedWriter(new FileWriter(new File("resource/AL.out")));
+            Scanner scanner = new Scanner(new FileInputStream(new File("resource/C-small-practice.in")));
+            BufferedWriter bfw = new BufferedWriter(new FileWriter(new File("resource/CS.out")));
             int k = 0;
             int t = scanner.nextInt();
             while (k++ < t) {
                 int n = scanner.nextInt();
-                Map<Integer, PriorityQueue<String>> map = new HashMap<>();
-                int max = 0;
-                scanner.nextLine();
-                while (n-- > 0) {
-                    String s = scanner.nextLine();
-                    int c = CountString.count(s);
-                    if (c > max) {
-                        max = c;
-                        PriorityQueue<String> pq = new PriorityQueue<>();
-                        pq.offer(s);
-                        map.put(c, pq);
-                    } else if (c == max) {
-                        map.get(c).offer(s);
-                    }
+                double[] nums = new double[n + 1];
+                for (int i = 0; i <= n; i++) {
+                    nums[i] = scanner.nextDouble();
                 }
-                bfw.write("Case #" + k + ": " + map.get(max).peek());
+                nums[0] = - nums[0];
+                bfw.write("Case #" + k + ": " + IRR.irr(nums));
                 bfw.newLine();
             }
             scanner.close();
