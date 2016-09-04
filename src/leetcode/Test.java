@@ -8,8 +8,106 @@ import java.util.Set;
  */
 public class Test {
     public static void main(String[] args) {
-        int[][] rec = {{}};
-        System.out.println(isRectangleCover(rec));
+        Test test = new Test();
+        System.out.println(test.decodeString("ef"));
+    }
+
+    public String decodeString(String s) {
+        if (s == null || s.length() == 0)
+            return s;
+        char[] cs = s.toCharArray();
+        return decode(cs, 0, cs.length-1);
+    }
+
+    private String decode(char[] cs, int start, int end) {
+        String res = "";
+        if (cs[start] > '0' && cs[start] <= '9') {
+            int k = start;
+            int rep = 0;
+            while (cs[k] != '[')
+                rep = rep * 10 + (cs[k++] - '0');
+            int count = 1;
+            k++;
+            int instart = k;
+            while (k <= end) {
+                if (cs[k] == '[')
+                    count++;
+                else if (cs[k] == ']')
+                    count--;
+                if (count == 0)
+                    break;
+                k++;
+            }
+            String s = decode(cs, instart, k - 1);
+            while (rep-- > 0)
+                res += s;
+            if (k < end)
+                res += decode(cs, k+1, end);
+        }
+        else {
+            while (start <= end && cs[start] >= 'a' && cs[start] <= 'z') {
+                res += cs[start];
+                start++;
+            }
+            if (start < end)
+                res += decode(cs, start, end);
+        }
+        return res;
+    }
+
+    public boolean validUtf8(int[] data) {
+        int len = 0;
+        for (int i : data) {
+            int count = count(i);
+            if ((len > 0 && count != 1) ||
+                    (len == 0 && count == 1))
+                return false;
+            if (count == 1)
+                len--;
+            if (count > 1)
+                len = count - 1;
+        }
+        return len == 0;
+    }
+
+    private int count(int d) {
+        int[] c = new int[8];
+        for (int i = 7; i >= 0; i--) {
+            c[i] = d & 1;
+            d >>= 1;
+        }
+        int count = 0;
+        for (int i = 0; i < 8; i++) {
+            if (c[i] == 0)
+                break;
+            count++;
+        }
+        return count;
+    }
+
+    public boolean isSubsequence(String s, String t) {
+        if (s == null)
+            return true;
+        else if (t == null)
+            return false;
+        int l1 = s.length();
+        int l2 = t.length();
+        if (l1 == 0)
+            return true;
+        else if (l2 == 0)
+            return false;
+        int k = 0;
+        for (int i = 0; i < l1; i++) {
+            char c = s.charAt(i);
+            while (k < l2 && t.charAt(k) != c)
+                k++;
+            if (k == l2)
+                break;
+            if (i == l1 - 1 && t.charAt(k) == c)
+                return true;
+            k++;
+        }
+        return false;
     }
 
     private static boolean isRectangleCover(int[][] rectangles) {
