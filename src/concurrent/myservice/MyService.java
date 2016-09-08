@@ -7,14 +7,13 @@ import java.util.concurrent.Semaphore;
  */
 public class MyService {
 
-    private Semaphore semaphore = new Semaphore(1);
+    private boolean isFair = true;
+    private Semaphore semaphore = new Semaphore(1, isFair);
 
     public void testMethod() {
         try {
             semaphore.acquire();
-            Thread.sleep(1000);
-            System.out.println(semaphore.getQueueLength());
-            System.out.println(semaphore.hasQueuedThreads());
+            System.out.println(Thread.currentThread().getName());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {

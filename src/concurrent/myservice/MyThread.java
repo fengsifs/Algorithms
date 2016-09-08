@@ -14,6 +14,7 @@ public class MyThread extends Thread {
 
     @Override
     public void run() {
+        System.out.println(this.getName() + " 启动了！");
         myService.testMethod();
     }
 }
