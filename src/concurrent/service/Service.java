@@ -6,7 +6,7 @@ import java.util.concurrent.Semaphore;
  * Created by FengSi on 2016/09/08 at 15:25.
  */
 public class Service {
-    private Semaphore semaphore = new Semaphore(1);
+    private Semaphore semaphore = new Semaphore(2);
 
     public void testMethod() {
         try {
