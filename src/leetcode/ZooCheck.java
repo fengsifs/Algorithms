@@ -1,15 +1,11 @@
 package leetcode;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Created by FengSi on 2016/08/28 at 9:22.
  */
-public class Test {
+public class ZooCheck {
     public static void main(String[] args) {
-        int[][] rec = {{}};
-        System.out.println(isRectangleCover(rec));
+        ZooCheck zooCheck = new ZooCheck();
     }
 
     private static boolean isRectangleCover(int[][] rectangles) {
