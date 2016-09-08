@@ -7,18 +7,14 @@ import java.util.concurrent.Semaphore;
  */
 public class MyService {
 
-    private Semaphore semaphore = new Semaphore(10);
+    private Semaphore semaphore = new Semaphore(1);
 
     public void testMethod() {
         try {
             semaphore.acquire();
-            System.out.println(semaphore.availablePermits());
-            System.out.println(semaphore.drainPermits() + " "
-                    + semaphore.availablePermits());
-            System.out.println(semaphore.drainPermits() + " "
-                    + semaphore.availablePermits());
-            System.out.println(semaphore.drainPermits() + " "
-                    + semaphore.availablePermits());
+            Thread.sleep(1000);
+            System.out.println(semaphore.getQueueLength());
+            System.out.println(semaphore.hasQueuedThreads());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
