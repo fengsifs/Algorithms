@@ -5,6 +5,7 @@ import concurrent.extthread.ThreadB;
 import concurrent.myservice.MyService;
 import concurrent.myservice.MyThread;
 import concurrent.service.Service;
+import concurrent.tools.ListPool;
 
 /**
  * Created by FengSi on 2016/09/08 at 15:30.
@@ -12,15 +13,14 @@ import concurrent.service.Service;
 public class Run {
 
     public static void main(String[] args) throws InterruptedException {
-        MyService service = new MyService();
+        ListPool listPool = new ListPool();
 
-        MyThread myThread = new MyThread(service);
-        myThread.start();
-
-        MyThread[] threads = new MyThread[4];
-        for (int i = 0; i < 4; i++) {
-            threads[i] = new MyThread(service);
-            threads[i].start();
+        MyThread[] threads = new MyThread[12];
+        for (int i = 0; i < threads.length; i++) {
+            threads[i] = new MyThread(listPool);
+        }
+        for (MyThread thread : threads) {
+            thread.start();
         }
     }
 }
