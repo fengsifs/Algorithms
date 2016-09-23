@@ -55,7 +55,7 @@ public class StreamTest {
                 .map(transaction -> transaction.getTrader().getName())
                 .distinct()
                 .sorted()
-                .collect(joining());
+                .collect(joining(", "));
 //                .reduce("", (a, b) -> a + b);
         System.out.println(name);
 
