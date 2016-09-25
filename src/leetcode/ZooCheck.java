@@ -1,6 +1,8 @@
 package leetcode;
 
 import leetcode.backTracking.GenerateParentheses;
+import leetcode.contests.weeklyContest_6.ConvertaNumbertoHexadecimal;
+import leetcode.contests.weeklyContest_6.TrappingRainWaterII;
 
 import java.util.PriorityQueue;
 
@@ -9,7 +11,8 @@ import java.util.PriorityQueue;
  */
 public class ZooCheck {
     public static void main(String[] args) {
-        GenerateParentheses generateParentheses = new GenerateParentheses();
-        generateParentheses.generateParenthesis(4).forEach(System.out::println);
+        TrappingRainWaterII trappingRainWaterII = new TrappingRainWaterII();
+        int[][] ints = {{1,4,3,1,3,2},{3,2,1,1,2,4},{2,3,3,2,3,1}};
+        System.out.println(trappingRainWaterII.trapRainWater(ints));
     }
 }

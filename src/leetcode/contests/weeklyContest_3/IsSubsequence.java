@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.contests.weeklyContest_3;
 
 /**
  * Created by FengSi on 2016/09/05 at 0:05.

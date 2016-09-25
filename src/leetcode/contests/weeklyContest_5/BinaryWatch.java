@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.contests.weeklyContest_5;
 
 import java.util.*;
 
