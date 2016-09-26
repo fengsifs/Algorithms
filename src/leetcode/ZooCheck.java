@@ -3,7 +3,9 @@ package leetcode;
 import leetcode.backTracking.GenerateParentheses;
 import leetcode.contests.weeklyContest_6.ConvertaNumbertoHexadecimal;
 import leetcode.contests.weeklyContest_6.TrappingRainWaterII;
+import leetcode.twoPointers.MinimumWindowSubstring;
 
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 /**
@@ -11,8 +13,14 @@ import java.util.PriorityQueue;
  */
 public class ZooCheck {
     public static void main(String[] args) {
-        TrappingRainWaterII trappingRainWaterII = new TrappingRainWaterII();
-        int[][] ints = {{1,4,3,1,3,2},{3,2,1,1,2,4},{2,3,3,2,3,1}};
-        System.out.println(trappingRainWaterII.trapRainWater(ints));
+        MinimumWindowSubstring minimumWindowSubstring = new MinimumWindowSubstring();
+        System.out.println(minimumWindowSubstring.minWindow("dsafafasdasdaaaaa", "aaaaa"));
+    }
+
+    public static boolean compare(int n) {
+        int j = 1;
+        while (n > 0)
+            j *= n--;
+        return Math.pow(2, Math.pow(n, 2)) > j;
     }
 }
