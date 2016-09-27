@@ -20,7 +20,8 @@ public class MagicCube {
 //        int[][] smalls = new int[n][];
 //        for (int c = 0; c < n; c++) {
 //            int l = scanner.nextInt();
-//            smalls[c] = new int[l * l * l];
+//            smalls[c] = new int[l * l * l + 1];
+//            smalls[c][smalls[c].length - 1] = l;
 //            for (int i = 0; i < l; i++)
 //                for (int j = 0; j < l; j++)
 //                    for (int k = 0; k < l; k++)
@@ -29,8 +30,6 @@ public class MagicCube {
         int m = (int) (Math.random() * 6) + 2;
         int n = (int) (Math.random() * 12) + 1;
         int p = (int) (Math.random() * 3) + 3;
-        System.out.println("Input:");
-        System.out.println(m + " " + n + " " + p);
         int[] big = new int[m * m * m];
         int[][] smalls = new int[n][];
         for (int c = 0; c < n; c++) {
@@ -48,6 +47,8 @@ public class MagicCube {
                     }
         }
         big = Arrays.stream(big).map(i -> i % p).toArray();
+        System.out.println("Input:");
+        System.out.println(m + " " + n + " " + p);
         System.out.println(Arrays.stream(big).mapToObj(Integer::toString).collect(Collectors.joining(" ")));
         for (int[] small : smalls)
             System.out.println(small[small.length - 1] + " " +
