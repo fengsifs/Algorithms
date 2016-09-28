@@ -23,7 +23,6 @@ public class WirelessRouters {
             adj[a][++adj[a][0]] = b;
             adj[b][++adj[b][0]] = a;
         }
-        scanner.close();
 //        System.out.println("Input: ");
 //        int n = (int) (Math.random() * 29) + 2;
 //        int m = (int) (Math.random() * (n < 100 ? n : 15)) + 1;
@@ -46,23 +45,25 @@ public class WirelessRouters {
 //            adj[b][++adj[b][0]] = a;
 //        }
 //        System.out.println();
-        WirelessRouters wirelessRouters = new WirelessRouters();
-        int res = wirelessRouters.maxSat(s, adj, n, m);
-        System.out.println(res);
+        System.out.println(maxSat(s, adj, n, m));
     }
 
-    private int maxSat(int[] s, int[][] adj, int n, int m) {
+    private static int maxSat(int[] s, int[][] adj, int n, int m) {
         int res = 0;
         boolean[] wified = new boolean[n + 1];
         int[] rooms = new int[n + 1];
         PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> rooms[b] - rooms[a]);
+        int total = 0;
         for (int i = 1; i <= n; i++) {
             int sat = s[i];
+            total += sat;
             for (int j = 1; j <= adj[i][0]; j++)
                 sat += s[adj[i][j]];
             rooms[i] = sat;
             pq.add(i);
         }
+        if (m > (n + 2) / 3)
+            return total;
 //        System.out.println();
 //        System.out.println(Arrays.stream(rooms).skip(1).sorted().mapToObj(Integer::toString).collect(Collectors.joining(",")));
         while (m-- > 0 && !pq.isEmpty()) {

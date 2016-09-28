@@ -1,7 +1,8 @@
 package exams.wap;
 
 import java.util.*;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 /**
  * Created by FengSi on 2016/09/27 at 10:45.
@@ -49,33 +50,32 @@ public class MagicCube {
 //        big = Arrays.stream(big).map(i -> i % p).toArray();
         System.out.println("Input:");
         System.out.println(m + " " + n + " " + p);
-        System.out.println(Arrays.stream(big).mapToObj(Integer::toString).collect(Collectors.joining(" ")));
+        System.out.println(Arrays.stream(big).mapToObj(Integer::toString).collect(joining(" ")));
         for (int[] small : smalls)
             System.out.println(small[small.length - 1] + " " +
-                    Arrays.stream(small).mapToObj(Integer::toString).limit(small.length-1).collect(Collectors.joining(" ")));
+                    Arrays.stream(small).mapToObj(Integer::toString).limit(small.length-1).collect(joining(" ")));
         double start = System.currentTimeMillis();
-
-
-        MagicCube magicCube = new MagicCube();
         System.out.println();
         System.out.println("Output:");
-        for (int[] ints : magicCube.location(m, n, p, big, smalls))
-            System.out.println(Arrays.stream(ints).mapToObj(Integer::toString).collect(Collectors.joining(" ")));
+
+        int[][] loc = location(m, n, p, big, smalls);
+        for (int[] ints : loc)
+            System.out.println(Arrays.stream(ints).mapToObj(Integer::toString).collect(joining(" ")));
 
 
         System.out.println();
         double end = System.currentTimeMillis();
         System.out.println("耗时 " + (end-start)/1000 + " 秒");
-        System.out.println(Arrays.stream(big).mapToObj(Integer::toString).collect(Collectors.joining(" ")));
+        System.out.println(Arrays.stream(big).mapToObj(Integer::toString).collect(joining(" ")));
     }
 
-    private int[][] location(int m, int n, int p, int[] big, int[][] smalls) {
+    private static int[][] location(int m, int n, int p, int[] big, int[][] smalls) {
         int[][] loc = new int[n][3];
         dfs(m, n, p, big, smalls, 0, loc);
         return loc;
     }
 
-    private void dfs(int m, int n, int p, int[] big, int[][] smalls, int level, int[][] loc) {
+    private static void dfs(int m, int n, int p, int[] big, int[][] smalls, int level, int[][] loc) {
         int l = smalls[level][smalls[level].length - 1];
         for (int i = 0; i <= m - l; i++) {
             for (int j = 0; j <= m - l; j++) {
@@ -102,7 +102,7 @@ public class MagicCube {
         }
     }
 
-    private boolean check(int[] big, int p) {
+    private static boolean check(int[] big, int p) {
         for (int i : big) {
             if (i % p > 0)
                 return false;
