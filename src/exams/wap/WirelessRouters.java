@@ -1,6 +1,7 @@
 package exams.wap;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
@@ -24,8 +25,8 @@ public class WirelessRouters {
         }
         scanner.close();
 //        System.out.println("Input: ");
-//        int n = (int) (Math.random() * 999) + 2;
-//        int m = (int) (Math.random() * (n < 100 ? n : 100)) + 1;
+//        int n = (int) (Math.random() * 29) + 2;
+//        int m = (int) (Math.random() * (n < 100 ? n : 15)) + 1;
 //        System.out.println(n + " " + m);
 //        int[] s = new int[n + 1];
 //        for (int i = 1; i <= n; i++)
@@ -37,17 +38,17 @@ public class WirelessRouters {
 //            while (adj[a][0] == 3)
 //                a = (int) (Math.random() * n) + 1;
 //            int b = (int) (Math.random() * n) + 1;
-//            while (b == a || adj[b][0] == 3)
+//            while (b == a || adj[b][0] == 3 || (adj[a][0] >= 1 && adj[a][1] == b) ||
+//                    (adj[a][0] >= 2 && adj[a][2] == b) || (adj[a][0] == 3 && adj[a][3] == b))
 //                b = (int) (Math.random() * n) + 1;
 //            System.out.print(a + " " + b + " ");
 //            adj[a][++adj[a][0]] = b;
 //            adj[b][++adj[b][0]] = a;
 //        }
+//        System.out.println();
         WirelessRouters wirelessRouters = new WirelessRouters();
         int res = wirelessRouters.maxSat(s, adj, n, m);
-        System.out.println();
-        System.out.println();
-        System.out.println("Output: " + res);
+        System.out.println(res);
     }
 
     private int maxSat(int[] s, int[][] adj, int n, int m) {
@@ -62,6 +63,8 @@ public class WirelessRouters {
             rooms[i] = sat;
             pq.add(i);
         }
+//        System.out.println();
+//        System.out.println(Arrays.stream(rooms).skip(1).sorted().mapToObj(Integer::toString).collect(Collectors.joining(",")));
         while (m-- > 0 && !pq.isEmpty()) {
             int i = pq.poll();
             wified[i] = true;
@@ -76,7 +79,9 @@ public class WirelessRouters {
                     set.add(h);
                     rooms[h] -= s[k];
                 }
+                s[k] = 0;
             }
+            s[i] = 0;
             set.stream().filter(r -> !wified[r]).forEach(r -> {
                 pq.remove(r);
                 if (rooms[r] > 0)
@@ -85,6 +90,7 @@ public class WirelessRouters {
                     wified[r] = true;
             });
         }
+//        System.out.println(Arrays.stream(rooms).skip(1).mapToObj(Integer::toString).collect(Collectors.joining(",")));
         return res;
     }
 }
