@@ -23,32 +23,10 @@ public class WirelessRouters {
             adj[a][++adj[a][0]] = b;
             adj[b][++adj[b][0]] = a;
         }
-//        System.out.println("Input: ");
-//        int n = (int) (Math.random() * 29) + 2;
-//        int m = (int) (Math.random() * (n < 100 ? n : 15)) + 1;
-//        System.out.println(n + " " + m);
-//        int[] s = new int[n + 1];
-//        for (int i = 1; i <= n; i++)
-//            s[i] = (int) (Math.random() * 10) + 1;
-//        System.out.println(Arrays.stream(s).skip(1).mapToObj(Integer::toString).collect(joining(" ")));
-//        int[][] adj = new int[n + 1][4];
-//        for (int i = 1; i < n; i++) {
-//            int a = (int) (Math.random() * n) + 1;
-//            while (adj[a][0] == 3)
-//                a = (int) (Math.random() * n) + 1;
-//            int b = (int) (Math.random() * n) + 1;
-//            while (b == a || adj[b][0] == 3 || (adj[a][0] >= 1 && adj[a][1] == b) ||
-//                    (adj[a][0] >= 2 && adj[a][2] == b) || (adj[a][0] == 3 && adj[a][3] == b))
-//                b = (int) (Math.random() * n) + 1;
-//            System.out.print(a + " " + b + " ");
-//            adj[a][++adj[a][0]] = b;
-//            adj[b][++adj[b][0]] = a;
-//        }
-//        System.out.println();
         System.out.println(maxSat(s, adj, n, m));
     }
 
-    private static int maxSat(int[] s, int[][] adj, int n, int m) {
+    public static int maxSat(int[] s, int[][] adj, int n, int m) {
         int res = 0;
         boolean[] wified = new boolean[n + 1];
         int[] rooms = new int[n + 1];
@@ -62,10 +40,8 @@ public class WirelessRouters {
             rooms[i] = sat;
             pq.add(i);
         }
-        if (m > (n + 2) / 3)
+        if (m >= n / 2)
             return total;
-//        System.out.println();
-//        System.out.println(Arrays.stream(rooms).skip(1).sorted().mapToObj(Integer::toString).collect(Collectors.joining(",")));
         while (m-- > 0 && !pq.isEmpty()) {
             int i = pq.poll();
             wified[i] = true;
@@ -91,7 +67,6 @@ public class WirelessRouters {
                     wified[r] = true;
             });
         }
-//        System.out.println(Arrays.stream(rooms).skip(1).mapToObj(Integer::toString).collect(Collectors.joining(",")));
         return res;
     }
 }
