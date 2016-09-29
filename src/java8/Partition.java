@@ -13,11 +13,11 @@ import static java.util.stream.Collectors.partitioningBy;
  */
 public class Partition {
     public static void main(String[] args) {
-        System.out.println(partitionPrimes(100).get(true).stream()
+        System.out.println(partitionPrimes(1000).get(true).stream()
                 .map(number -> Integer.toString(number)).collect(joining(",")));
     }
 
-    private static boolean isPrime(int candidate) {
+    public static boolean isPrime(int candidate) {
         int candidateRoot = (int) Math.sqrt(candidate);
         return IntStream.rangeClosed(2, candidateRoot)
                 .noneMatch(i -> candidate % i == 0);
