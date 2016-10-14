@@ -1,6 +1,8 @@
 package leetcode;
 
+import leetcode.array.PermutationSequence;
 import leetcode.backTracking.GenerateParentheses;
+import leetcode.backTracking.NQueensII;
 import leetcode.contests.weeklyContest_6.ConvertaNumbertoHexadecimal;
 import leetcode.contests.weeklyContest_6.TrappingRainWaterII;
 import leetcode.twoPointers.MinimumWindowSubstring;
@@ -13,8 +15,9 @@ import java.util.PriorityQueue;
  */
 public class ZooCheck {
     public static void main(String[] args) {
-        MinimumWindowSubstring minimumWindowSubstring = new MinimumWindowSubstring();
-        System.out.println(minimumWindowSubstring.minWindow("dsafafasdasdaaaaa", "aaaaa"));
+        PermutationSequence permutationSequence = new PermutationSequence();
+        System.out.println(permutationSequence.getPermutation(5, 10));
+
     }
 
     public static boolean compare(int n) {
