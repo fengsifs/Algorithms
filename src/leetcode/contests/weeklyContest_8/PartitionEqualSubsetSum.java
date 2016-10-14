@@ -1,9 +1,26 @@
 package leetcode.contests.weeklyContest_8;
 
+import java.util.Arrays;
+
 /**
  * Created by FengSi on 2016/10/09 at 10:53.
  */
 public class PartitionEqualSubsetSum {
+    public boolean canPartition(int[] nums) {
+        int sum = Arrays.stream(nums).sum();
+        if ((sum & 1) == 1)
+            return false;
+        sum >>= 1;
+        boolean[] dp = new boolean[nums.length + 1];
+        dp[0] = true;
+        for (int n : nums) {
+            for (int v = sum; v >= n; v--)
+                dp[v] |= dp[v - n];
+            if (dp[sum])
+                return true;
+        }
+        return false;
+    }
 }
 
 /*
