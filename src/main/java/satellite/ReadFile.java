@@ -18,10 +18,10 @@ public class ReadFile {
         SingularValueDecomposition svd = m.svd();
         Matrix u = svd.getU();
         System.out.println("u: " + u.getColumnDimension() + " x " + u.getRowDimension());
-        Matrix s = svd.getS();
-        System.out.println("u: " + s.getColumnDimension() + " x " + s.getRowDimension());
-        Matrix v = svd.getV();
-        System.out.println("v: " + v.getColumnDimension() + " x " + v.getRowDimension());
+//        Matrix s = svd.getS();
+//        System.out.println("u: " + s.getColumnDimension() + " x " + s.getRowDimension());
+//        Matrix v = svd.getV();
+//        System.out.println("v: " + v.getColumnDimension() + " x " + v.getRowDimension());
 
     }
 
