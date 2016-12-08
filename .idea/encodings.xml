@@ -2,5 +2,6 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/resource/mcTests.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/satellite/Anomalies.java" charset="GBK" />
   </component>
 </project>

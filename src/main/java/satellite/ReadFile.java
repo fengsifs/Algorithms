@@ -63,8 +63,7 @@ public class ReadFile {
             }
             double[][] tempP = new double[fs.length][size];
             for (int i = 0; i < tempP.length; i++)
-                for (int j = 0; j < tempP[0].length; j++)
-                    tempP[i][j] = points[i][j];
+                System.arraycopy(points[i], 0, tempP[i], 0, tempP[0].length);
             points = tempP;
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +71,7 @@ public class ReadFile {
         return points;
     }
 
-    private static File[] fs(String path) {
+    public static File[] fs(String path) {
         File root = new File(path);
         return root.listFiles();
     }
