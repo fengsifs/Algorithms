@@ -1,6 +1,7 @@
 package satellite;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,8 +13,7 @@ public class StatAnom {
         for (File f : fs) {
             List<String[]> lines = ReadHandler.lines(f);
             double[] data = ReadHandler.data(lines);
-            double[] anomalies = Anomalies.findAnomalies(Anomalies.standardization(data),
-                    Double.parseDouble(args[2]));
+            double[] anomalies = Anomalies.anomalies(data, Double.parseDouble(args[2]));
             WriteHandler.write(args[1], f, anomalies, lines, data);
         }
     }

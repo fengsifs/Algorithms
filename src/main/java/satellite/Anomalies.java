@@ -83,6 +83,11 @@ public class Anomalies {
         return Arrays.stream(data).map(i -> (i - avg) / std).toArray();
     }
 
+    public static double[] anomalies(double[] data, double threshold) {
+        double avg = Arrays.stream(data).reduce(0, Double::sum) / data.length;
+        return Arrays.stream(data).map(i -> Math.abs(i - avg) > threshold ? 1 : 0).toArray();
+    }
+
     public static double[] findAnomalies(double[] data, double threshold) {
         // 经标准化处理后数据根据设定的阈值寻找异常点
         return Arrays.stream(data).map(i -> Math.abs(i) > threshold ? 1 : 0).toArray();
