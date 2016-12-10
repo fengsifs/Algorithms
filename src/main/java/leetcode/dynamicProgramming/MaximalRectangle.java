@@ -1,5 +1,7 @@
 package leetcode.dynamicProgramming;
 
+import java.util.Arrays;
+
 /**
  * Created by FengSi on 2016/10/14 at 18:29.
  */
@@ -13,15 +15,36 @@ public class MaximalRectangle {
         int[][] height = new int[rows+1][cols];
         for (int i = 1; i <= rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (matrix[i][j] == '1')
+                if (matrix[i-1][j] == '1')
                     height[i][j] = height[i-1][j] + 1;
             }
         }
-        return max(height[0]);
+        int max = 0;
+        for (int[] h : height)
+            max = Math.max(max, max(h));
+        return max;
     }
 
     private int max(int[] h) {
-        return 0;
+        int n = h.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        left[0] = 0;
+        right[n-1] = n -1;
+        for (int i = 1, j = n-2; i < n; i++, j--) {
+            int currentLeft = i - 1;
+            while (currentLeft >= 0 && h[currentLeft] >= h[i])
+                currentLeft = left[currentLeft] - 1;
+            left[i] = currentLeft + 1;
+            int currentRight = j + 1;
+            while (currentRight < n && h[currentRight] >= h[j])
+                currentRight = right[currentRight] + 1;
+            right[j] = currentRight - 1;
+        }
+        int max = 0;
+        for (int i = 0; i < n; i++)
+            max = Math.max(max, (right[i] - left[i] + 1) * h[i]);
+        return max;
     }
 }
 
