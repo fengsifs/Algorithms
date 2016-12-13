@@ -21,7 +21,11 @@ public class DataIntoDatabase {
             File[] fs = root.listFiles();
             for (File f : fs) {
                 String tableName = f.getName().split("\\.")[0];
-                String sql = "LOAD DATA INFILE \"" + f.getAbsolutePath() + "\"\n" +
+                statement.execute("CREATE TABLE `" + tableName + "` (\n" +
+                        "  `time` BIGINT DEFAULT NULL,\n" +
+                        "  `value` DOUBLE DEFAULT NULL\n" +
+                        ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+                String sql = "LOAD DATA LOCAL INFILE \"" + f.getAbsolutePath() + "\"\n" +
                         " INTO TABLE " + tableName + "\n" +
                         "FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' \n" +
                         "LINES TERMINATED BY '\\n';";
