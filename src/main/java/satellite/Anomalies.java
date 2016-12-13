@@ -22,7 +22,8 @@ public class Anomalies {
             double[] data = ReadHandler.data(lines);
             Complex[] complexes = transform(data);
             double[] anomalies = findAnomalies(standardization
-                    (distances(totalFeature(complexes), features(complexes, 5))), Double.parseDouble(args[2]));
+                    (distances(totalFeature(complexes), features(complexes, Integer.parseInt(args[2])),
+                            Integer.parseInt(args[3]))), Double.parseDouble(args[4]));
             WriteHandler.write(args[1], f, anomalies, lines, data);
         }
     }
@@ -50,19 +51,19 @@ public class Anomalies {
         return features;
     }
 
-    private static double[] distances(Complex[] totalFeature, Complex[][] features) {
+    private static double[] distances(Complex[] totalFeature, Complex[][] features, int featureNum) {
         // 计算每个时间点起始时间段与整体特征的距离
         double[] distances = new double[features.length];
         for (int i = 0; i < distances.length; i++)
-            distances[i] = distance(totalFeature, features[i]);
+            distances[i] = distance(totalFeature, features[i], featureNum);
         return distances;
     }
 
 
-    private static double distance(Complex[] bench, Complex[] test) {
+    private static double distance(Complex[] bench, Complex[] test, int featureNum) {
         // 计算测试数组与基准数组的距离
         double res = 0;
-        for (int i = 0; i < test.length; i++)
+        for (int i = 0; i < featureNum; i++)
             res += bench[i].minus(test[i]).abs();
         return res;
     }

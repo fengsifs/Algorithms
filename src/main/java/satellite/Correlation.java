@@ -1,5 +1,7 @@
 package satellite;
 
+import org.apache.commons.math3.stat.correlation.SpearmansCorrelation;
+
 import java.io.File;
 
 /**
@@ -13,10 +15,10 @@ public class Correlation {
         for (int i = 0; i < fs.length; i++) {
             for (int j = i + 1; j < fs.length; j++) {
                 System.out.println(fs[i].getName().split("\\.")[0] +
-                    "'s correlation with " +
-                    fs[j].getName().split("\\.")[0] +
-                    " is: " +
-                    SpearmanRank.spearmanRank(points[i], points[j]));
+                        "," +
+                        fs[j].getName().split("\\.")[0] +
+                        "," +
+                        new SpearmansCorrelation().correlation(points[i], points[j]));
             }
         }
     }
