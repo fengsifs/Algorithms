@@ -14,11 +14,15 @@ public class Correlation {
         double[][] points = ReadFile.points(args[0]);
         for (int i = 0; i < fs.length; i++) {
             for (int j = i + 1; j < fs.length; j++) {
+                double rank = 0;
+                if (args[1].equals("1"))
+                    rank = new SpearmansCorrelation().correlation(points[i], points[j]);
+                else if (args[1].equals("2"))
+                    rank = SpearmanRank.spearmanRank(points[i], points[j]);
                 System.out.println(fs[i].getName().split("\\.")[0] +
                         "," +
                         fs[j].getName().split("\\.")[0] +
-                        "," +
-                        new SpearmansCorrelation().correlation(points[i], points[j]));
+                        "," + rank);
             }
         }
     }

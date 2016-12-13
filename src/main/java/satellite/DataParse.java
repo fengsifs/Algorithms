@@ -1,10 +1,8 @@
 package satellite;
 
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-
-import java.io.File;
+import java.io.*;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -17,33 +15,38 @@ public class DataParse {
             String url = "jdbc:mysql://master:3306/satellite?useSSL=false";
             Connection connection = DriverManager.getConnection(url);
             Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery("SELECT * FROM hj010c;");
-            while (set.next()) {
-                System.out.println(set.getString(3));
-                System.out.println(set.getString(4));
+            String path = args[0];
+            File root = new File(path);
+            File[] fs = root.listFiles();
+            final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            BufferedReader reader;
+            BufferedWriter writer;
+            for (File f : fs) {
+                String id = f.getName().split("\\.")[0];
+                ResultSet set = statement.executeQuery("SELECT * FROM " + args[1] + " WHERE id=" + id);
+                String code = null;
+                if (set.next()) {
+                     code = set.getString(2);
+                }
+                String tableName = args[1] + "_" + code;
+                statement.execute("CREATE TABLE `" + tableName + "` (\n" +
+                        "  `time` BIGINT DEFAULT NULL,\n" +
+                        "  `value` DOUBLE DEFAULT NULL\n" +
+                        ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+                reader = new BufferedReader(new FileReader(f));
+                writer = new BufferedWriter(new FileWriter(args[2] + tableName + ".csv"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] s = line.split(",");
+                    long time = simpleDateFormat.parse(s[0]).getTime();
+                    double value = Double.parseDouble(s[1]);
+                    writer.write(time + "," + value);
+                    writer.newLine();
+                }
+                reader.close();
+                writer.close();
+                set.close();
             }
-//            String path = "C:\\Users\\FengSi\\Desktop\\data";
-//            File root = new File(path);
-//            File[] fs = root.listFiles();
-//            SAXReader reader = new SAXReader();
-//            for (File f : fs) {
-//                String tableName = f.getName().split("\\.")[0];
-//                statement.execute("CREATE TABLE `hj010c` (\n" +
-//                        "  `id` int(11) DEFAULT NULL,\n" +
-//                        "  `code` varchar(15) DEFAULT NULL,\n" +
-//                        "  `name` varchar(50) DEFAULT NULL,\n" +
-//                        "  `type` varchar(10) DEFAULT NULL\n" +
-//                        ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
-//                List<Element> params = reader.read(f).getRootElement().elements();
-//                for (Element param : params) {
-//                    int id = Integer.parseInt(param.attributeValue("ID"));
-//                    String code = param.attributeValue("Code");
-//                    String name = param.attributeValue("Name");
-//                    String type = param.attributeValue("Type");
-//                    statement.execute("INSERT INTO " + tableName + "(id, code, name, type)" +
-//                            "VALUE (" + id + ",\"" + code + "\",\"" + name + "\",\"" + type + "\");");
-//                }
-//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
