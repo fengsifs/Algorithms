@@ -21,10 +21,16 @@ public class Anomalies {
             List<String[]> lines = ReadHandler.lines(f);
             double[] data = ReadHandler.data(lines);
             Complex[] complexes = transform(data);
+            int p = Integer.parseInt(args[3]);
+            int feature = Integer.parseInt(args[4]);
+            double threshold = Double.parseDouble(args[5]);
+            Complex[] totalFeature = totalFeature(complexes);
             double[] anomalies = findAnomalies(standardization
-                    (distances(totalFeature(complexes), features(complexes, Integer.parseInt(args[2])),
-                            Integer.parseInt(args[3]))), Double.parseDouble(args[4]));
-            WriteHandler.write(args[1], f, anomalies, lines, data);
+                    (distances(totalFeature, features(complexes, p), feature)), threshold);
+            if (args[2].equals("0"))
+                WriteHandler.write(args[1], f, anomalies, lines, data, "feature");
+            if (args[2].equals("1"))
+                WriteHandler.write(args[1], f, anomalies, lines, data, p, feature, threshold, totalFeature);
         }
     }
 
@@ -82,11 +88,6 @@ public class Anomalies {
         double std = Math.sqrt(Arrays.stream(data).map(i -> (i - avg) * (i - avg)).
                 reduce(0, Double::sum) / data.length);
         return Arrays.stream(data).map(i -> (i - avg) / std).toArray();
-    }
-
-    public static double[] anomalies(double[] data, double threshold) {
-        double avg = Arrays.stream(data).reduce(0, Double::sum) / data.length;
-        return Arrays.stream(data).map(i -> Math.abs(i - avg) > threshold ? 1 : 0).toArray();
     }
 
     public static double[] findAnomalies(double[] data, double threshold) {

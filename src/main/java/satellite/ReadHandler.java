@@ -25,7 +25,7 @@ public class ReadHandler {
             else
                 return 1;
         }).mapToDouble(d -> (double) d).toArray();
-        WriteHandler.write(args[1], f, anomalies, lines, data);
+        WriteHandler.write(args[1], f, anomalies, lines, data, "benchmark");
     }
 
     public static double[] data(List<String[]> lines) {

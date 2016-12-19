@@ -23,7 +23,8 @@ public class DataIntoDatabase {
                 String tableName = f.getName().split("\\.")[0];
                 statement.execute("CREATE TABLE `" + tableName + "` (\n" +
                         "  `time` BIGINT DEFAULT NULL,\n" +
-                        "  `value` DOUBLE DEFAULT NULL\n" +
+                        "  `value` DOUBLE DEFAULT NULL,\n" +
+                        "  `anomaly` DOUBLE DEFAULT NULL\n" +
                         ") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                 String sql = "LOAD DATA LOCAL INFILE \"" + f.getAbsolutePath() + "\"\n" +
                         " INTO TABLE " + tableName + "\n" +

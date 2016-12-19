@@ -1,5 +1,6 @@
 package satellite.anomalyDetection;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class Test {
@@ -38,15 +39,12 @@ public class Test {
 	 * @param MinCount:后缀树每个结点最小计数
 	 * @return
 	 */
-	ArrayList<Integer> anomalyDetection(String filename, String testfilename, String path, 
+	ArrayList<Integer> anomalyDetection(String filename, String testfilename, String path,
 			int alphabetSize, int level, int MinCount,int winSize, double theta){
-//		String path = ".\\output.txt";
-		ArrayList<Integer> abnormalPoints = new ArrayList<Integer>();
+		ArrayList<Integer> abnormalPoints = new ArrayList<>();
 		
 		String data = init(filename, alphabetSize, winSize);		//时间序列数据
-//		System.out.println(data.substring(0,100));
 		String test = init(filename, alphabetSize, winSize);		//待检测数据
-		
 		if(data!=null && test!=null){
 			// 构造概率后缀树
 			PST tree = new PST();
@@ -64,7 +62,7 @@ public class Test {
 			System.out.println("P: "+f1.getP()+",	R: "+f1.getR()+",	F-Measure: "+f1.computeFmeasure(abnormalPoints));
 			
 			IO output = new IO();
-			output.writeToFile(path, abnormalPoints);
+			output.writeToFile(testfilename, path, abnormalPoints);
 			
 			return abnormalPoints;
 		}
@@ -82,24 +80,42 @@ public class Test {
 		int level = 3;		//除根结点以外的树的深度。树的层数=level+1;
 		int MinCount = 30;
 		double theta = 0.05;
-		String filename = ".\\input.txt";
-		String testfilename = ".\\input.txt";
-		String path = ".\\output.txt";
-		ArrayList<Integer> abnormalPoints = new ArrayList<Integer>();
-		
-		Test temp = new Test();
-		abnormalPoints = temp.anomalyDetection(filename, testfilename, path, alphabetSize, level, MinCount, winSize, theta);
-		
-		long stop = System.currentTimeMillis();
-		long time = (stop - start) / 1000;
-		long millis = (stop - start) % 1000;
-		System.out.println("runtime: "+time+"second, "+millis+"millisecond");
-		if(abnormalPoints != null){
-			System.out.println("anomaly: "+abnormalPoints.size());
-			for (Integer i : abnormalPoints) {
-				System.out.println(i);
-			}
+		Test test = new Test();
+		String filename = "C:\\Users\\FengSi\\Desktop\\temp\\12300b.csv";
+		String b = test.init(filename, alphabetSize, winSize);
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("C:\\Users\\FengSi\\Desktop\\temp\\b.txt")));
+			writer.write(b);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		System.out.println();
+		String testfilename = "C:\\Users\\FengSi\\Desktop\\temp\\12300b.csv";
+		String a = test.init(testfilename, alphabetSize, winSize);
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("C:\\Users\\FengSi\\Desktop\\temp\\a.txt")));
+			writer.write(a);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String path = "C:\\Users\\FengSi\\Desktop\\temp\\output.csv";
+//		ArrayList<Integer> abnormalPoints = new ArrayList<Integer>();
+//
+//		Test temp = new Test();
+//		abnormalPoints = temp.anomalyDetection(filename, testfilename, path, alphabetSize, level, MinCount, winSize, theta);
+//
+//		long stop = System.currentTimeMillis();
+//		long time = (stop - start) / 1000;
+//		long millis = (stop - start) % 1000;
+//		System.out.println("runtime: "+time+"second, "+millis+"millisecond");
+//		if(abnormalPoints != null){
+//			System.out.println("anomaly: "+abnormalPoints.size());
+//			for (Integer i : abnormalPoints) {
+//				System.out.println(i);
+//			}
+//		}
 		
 	}
 
