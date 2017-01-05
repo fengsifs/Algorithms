@@ -14,7 +14,7 @@ public class SpearmanRank {
         double sum1 = 0;
         double sum2 = 0;
         double sum3 = 0;
-        for (int i = 0; i < x.length; i++) {
+        for (int i = 0; i < Math.min(x.length, y.length); i++) {
             sum1 += (x[i] - avgX) * (y[i] - avgY);
             sum2 += (x[i] - avgX) * (x[i] - avgX);
             sum3 += (y[i] - avgY) * (y[i] - avgY);

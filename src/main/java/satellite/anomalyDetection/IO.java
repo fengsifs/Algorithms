@@ -2,6 +2,8 @@ package satellite.anomalyDetection;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class IO {
 	private int length;
@@ -19,26 +21,13 @@ public class IO {
 	 */
 	ArrayList<Double> readFromTxt(String path){
 		length = 0;
-		ArrayList<Double> value = new ArrayList<Double>();
+		ArrayList<Double> value = new ArrayList<>();
 		try{
-	//		String path = ".\\input.txt";		
-			File filename = new File(path);
-			InputStreamReader reader = new InputStreamReader(new FileInputStream(filename));
-			BufferedReader br = new BufferedReader(reader);
-			
-			String line = "";
-			
-			while((line = br.readLine()) != null){	
-				if(!line.trim().equals("")){		//遇到空行不处理
-					String[] tem = line.split(" ");		//以空格为分隔符，分割各double数值
-					for (String i : tem) {
-						if (!i.equals("")){			//若不为空则加入链表中
-							value.add(Double.parseDouble(i));	
-							length++;
-						}
-					}
-				}
-				
+			BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+			String line;
+			while((line = br.readLine()) != null){
+				value.add(Double.parseDouble(line.split(",")[1]));
+				length++;
 			}
 			br.close();
 		}catch(Exception e){
@@ -47,24 +36,43 @@ public class IO {
 	
 		return value;
 	}
+
+    void writeToFile(String testFile, String path, ArrayList<Integer> data){
+        try{
+            BufferedWriter out = new BufferedWriter(new FileWriter(new File(path)));
+            Set<Integer> anomalies = new HashSet<>(data);
+            BufferedReader reader = new BufferedReader(new FileReader(new File(testFile)));
+            String line;
+            int i = 0;
+            while ((line = reader.readLine()) != null) {
+                out.write(line + "," + (anomalies.contains(i) ? 1 : 0));
+                i++;
+                out.newLine();
+            }
+            reader.close();
+            out.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 	
-	void writeToFile(String path, ArrayList<Integer> data){
-		try{
-			//		String path = ".\\output.txt";		
-					File filename = new File(path);
-					filename.createNewFile();
-					BufferedWriter out = new BufferedWriter(new FileWriter(filename));
-					out.write("abnormal data points:");
-					out.write("\r\n");
-					for (int i=0; i<data.size(); i++) {
-						out.write(""+data.get(i)+", ");
-				//		out.write("\r\n");
-					}
-					out.close();
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-	}
+//	void writeToFile(String path, ArrayList<Integer> data){
+//		try{
+//			//		String path = ".\\output.txt";
+//					File filename = new File(path);
+//					filename.createNewFile();
+//					BufferedWriter out = new BufferedWriter(new FileWriter(filename));
+//					out.write("abnormal data points:");
+//					out.write("\r\n");
+//					for (int i=0; i<data.size(); i++) {
+//						out.write(""+data.get(i)+", ");
+//				//		out.write("\r\n");
+//					}
+//					out.close();
+//				}catch(Exception e){
+//					e.printStackTrace();
+//				}
+//	}
 	
 	public static void main(String[] args){
 		//读文件测试

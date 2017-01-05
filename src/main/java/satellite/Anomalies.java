@@ -21,9 +21,16 @@ public class Anomalies {
             List<String[]> lines = ReadHandler.lines(f);
             double[] data = ReadHandler.data(lines);
             Complex[] complexes = transform(data);
+            int p = Integer.parseInt(args[3]);
+            int feature = Integer.parseInt(args[4]);
+            double threshold = Double.parseDouble(args[5]);
+            Complex[] totalFeature = totalFeature(complexes);
             double[] anomalies = findAnomalies(standardization
-                    (distances(totalFeature(complexes), features(complexes, 5))), Double.parseDouble(args[2]));
-            WriteHandler.write(args[1], f, anomalies, lines, data);
+                    (distances(totalFeature, features(complexes, p), feature)), threshold);
+            if (args[2].equals("0"))
+                WriteHandler.write(args[1], f, anomalies, lines, data, "feature");
+            if (args[2].equals("1"))
+                WriteHandler.write(args[1], f, anomalies, lines, data, p, feature, threshold, totalFeature);
         }
     }
 
@@ -50,19 +57,19 @@ public class Anomalies {
         return features;
     }
 
-    private static double[] distances(Complex[] totalFeature, Complex[][] features) {
+    private static double[] distances(Complex[] totalFeature, Complex[][] features, int featureNum) {
         // 计算每个时间点起始时间段与整体特征的距离
         double[] distances = new double[features.length];
         for (int i = 0; i < distances.length; i++)
-            distances[i] = distance(totalFeature, features[i]);
+            distances[i] = distance(totalFeature, features[i], featureNum);
         return distances;
     }
 
 
-    private static double distance(Complex[] bench, Complex[] test) {
+    private static double distance(Complex[] bench, Complex[] test, int featureNum) {
         // 计算测试数组与基准数组的距离
         double res = 0;
-        for (int i = 0; i < test.length; i++)
+        for (int i = 0; i < featureNum; i++)
             res += bench[i].minus(test[i]).abs();
         return res;
     }
@@ -81,11 +88,6 @@ public class Anomalies {
         double std = Math.sqrt(Arrays.stream(data).map(i -> (i - avg) * (i - avg)).
                 reduce(0, Double::sum) / data.length);
         return Arrays.stream(data).map(i -> (i - avg) / std).toArray();
-    }
-
-    public static double[] anomalies(double[] data, double threshold) {
-        double avg = Arrays.stream(data).reduce(0, Double::sum) / data.length;
-        return Arrays.stream(data).map(i -> Math.abs(i - avg) > threshold ? 1 : 0).toArray();
     }
 
     public static double[] findAnomalies(double[] data, double threshold) {
