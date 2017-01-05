@@ -3,6 +3,7 @@ package leetcode;
 import leetcode.array.PermutationSequence;
 import leetcode.backTracking.GenerateParentheses;
 import leetcode.backTracking.NQueensII;
+import leetcode.binarySearch.Heaters;
 import leetcode.contests.weeklyContest_6.ConvertaNumbertoHexadecimal;
 import leetcode.contests.weeklyContest_6.TrappingRainWaterII;
 import leetcode.twoPointers.MinimumWindowSubstring;
@@ -17,10 +18,9 @@ import java.util.TreeMap;
  */
 public class ZooCheck {
     public static void main(String[] args) {
-        PermutationSequence permutationSequence = new PermutationSequence();
-        System.out.println(permutationSequence.getPermutation(5, 10));
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-        Map.Entry<Integer, Integer> a = map.lowerEntry(1);
+        int[] houses = {1, 2, 3, 3, 5};
+        int[] heaters = {1, 2, 3, 3, 5};
+        System.out.println(Heaters.findRadius(houses, heaters));
     }
 
 

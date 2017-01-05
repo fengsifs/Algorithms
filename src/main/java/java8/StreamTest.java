@@ -3,6 +3,8 @@ package java8;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.joining;
@@ -13,6 +15,13 @@ import static java.util.stream.Collectors.toList;
  */
 public class StreamTest {
     public static void main(String[] args) {
+        String[] aa = {"dxsa", "Dsad", "fdfa"};
+        System.out.println(Arrays.stream(aa).limit(6).collect(Collectors.joining(",")));
+
+        String a = "hj010c_dsadasd";
+        System.out.println(a.substring(0, 6));
+        System.out.println(a.substring(7, a.length()));
+
         Trader raoul = new Trader("Raoul", "Cambridge");
         Trader mario = new Trader("Mario", "Milan");
         Trader alan = new Trader("Alan", "Cambridge");
