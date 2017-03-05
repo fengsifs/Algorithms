@@ -4,8 +4,10 @@ import leetcode.array.PermutationSequence;
 import leetcode.backTracking.GenerateParentheses;
 import leetcode.backTracking.NQueensII;
 import leetcode.binarySearch.Heaters;
+import leetcode.classes.TreeNode;
 import leetcode.contests.weeklyContest_6.ConvertaNumbertoHexadecimal;
 import leetcode.contests.weeklyContest_6.TrappingRainWaterII;
+import leetcode.tree.MostFrequentSubtreeSum;
 import leetcode.twoPointers.MinimumWindowSubstring;
 
 import java.util.Arrays;
@@ -18,9 +20,14 @@ import java.util.TreeMap;
  */
 public class ZooCheck {
     public static void main(String[] args) {
-        int[] houses = {1, 2, 3, 3, 5};
-        int[] heaters = {1, 2, 3, 3, 5};
-        System.out.println(Heaters.findRadius(houses, heaters));
+        TreeNode root = new TreeNode(5);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(-3);
+        MostFrequentSubtreeSum subtreeSum = new MostFrequentSubtreeSum();
+        int[] re = subtreeSum.findFrequentTreeSum(root);
+        for (int i : re) {
+            System.out.println(i);
+        }
     }
 
 
