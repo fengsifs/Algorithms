@@ -5,8 +5,10 @@ package interview;
  */
 public class ThreadTest {
     public static void main(String args[]) {
-        Thread t = new Thread(() -> pong());
+        Thread t = new Thread(ThreadTest::pong);
+        // start和run的区别，run是立即执行
         t.start();
+        t.run();
         System.out.print("ping");
     }
     static void pong() {
