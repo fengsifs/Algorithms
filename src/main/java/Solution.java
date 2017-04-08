@@ -1,30 +1,50 @@
+import java.util.Arrays;
+
 /**
  * Created by FengSi on 2017/04/08 at 12:29.
  */
 public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int[] A = {2,2,2,2,1,2,-1,2,1,3};
+        int[] A = {6,10,6,9,7,8};
         System.out.println(solution.solution(A));
     }
 
     public int solution(int[] A) {
+        int lenSmall = 1;
         int max = 1;
-        int len = 1;
-        int start = 0;
-        int prev = 0;
-        for (int i = 1; i < A.length; i++) {
-            if (A[i] > A[i-1]) {
-                len++;
-                if (len > max) {
-                    max = len;
-                    start = prev;
-                }
+        Arrays.sort(A);
+        int prevSmall = A[0];
+        int i = 1;
+        while (i < A.length) {
+            if (A[i] == A[0]) {
+                i++;
+                lenSmall++;
             } else {
-                prev = i;
-                len = 1;
+                break;
             }
         }
-        return start;
+        max = lenSmall;
+        if (i == A.length) {
+            return A.length;
+        }
+        int prevBig = A[i];
+        int lenBig = 1;
+        for (int j = i + 1; j < A.length; j++) {
+            if (A[j] == A[j - 1]) {
+                lenBig++;
+            } else {
+                if (prevBig - prevSmall == 1) {
+                    max = Math.max(max, lenBig + lenSmall);
+                } else {
+                    max = Math.max(Math.max(max, lenSmall), lenBig);
+                }
+                prevSmall = prevBig;
+                lenSmall = lenBig;
+                prevBig = A[j];
+                lenBig = 1;
+            }
+        }
+        return max;
     }
 }
