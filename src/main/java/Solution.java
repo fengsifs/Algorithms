@@ -6,45 +6,34 @@ import java.util.Arrays;
 public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int[] A = {6,10,6,9,7,8};
+        int[] A = new int[100000];
         System.out.println(solution.solution(A));
+        int[] BA = {2, 3, 4, 2};
+        System.out.println(solution.solution(BA));
     }
 
     public int solution(int[] A) {
-        int lenSmall = 1;
-        int max = 1;
+        if (A == null || A.length == 0) {
+            return 0;
+        }
+        long pairs = 0;
         Arrays.sort(A);
-        int prevSmall = A[0];
-        int i = 1;
-        while (i < A.length) {
-            if (A[i] == A[0]) {
-                i++;
-                lenSmall++;
+        long count = 1;
+        int prev = A[0];
+        for (int i = 1; i < A.length; i++) {
+            if (A[i] == prev) {
+                count++;
             } else {
-                break;
-            }
-        }
-        max = lenSmall;
-        if (i == A.length) {
-            return A.length;
-        }
-        int prevBig = A[i];
-        int lenBig = 1;
-        for (int j = i + 1; j < A.length; j++) {
-            if (A[j] == A[j - 1]) {
-                lenBig++;
-            } else {
-                if (prevBig - prevSmall == 1) {
-                    max = Math.max(max, lenBig + lenSmall);
-                } else {
-                    max = Math.max(Math.max(max, lenSmall), lenBig);
+                if (count > 1) {
+                    pairs += count * (count - 1) / 2;
                 }
-                prevSmall = prevBig;
-                lenSmall = lenBig;
-                prevBig = A[j];
-                lenBig = 1;
+                count = 1;
+                prev = A[i];
             }
         }
-        return max;
+        if (count > 1) {
+            pairs += count * (count - 1) / 2;
+        }
+        return (int) Math.min(pairs, 1000000000);
     }
 }
