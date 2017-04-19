@@ -5,12 +5,41 @@ import java.util.List;
 
 /**
  * Created by FengSi on 2017/03/06 at 12:34.
- */
-public class Prime {
-    public static void main(String[] args) {
-        System.out.println("All prime numbers between 2 and 100 are:\n" + findPrime(100));
-        System.out.println("All prime numbers between 2 and 200 are:\n " + findPrime(200));
+ */class A {
+
+    static {
+        System.out.print("1");
     }
+
+    public A() {
+        System.out.print("2");
+    }
+}
+
+class B extends A{
+
+    static {
+        System.out.print("a");
+    }
+
+    public B() {
+        System.out.print("b");
+    }
+}
+
+class C extends B {
+    public C() {
+        System.out.println("C");
+    }
+}
+public class Prime {
+
+
+
+    public static void main(String[] args) {
+        B ab = new C();
+    }
+
 
     private static List<Integer> findPrime(int n) {
         List<Integer> list = new ArrayList<>();
