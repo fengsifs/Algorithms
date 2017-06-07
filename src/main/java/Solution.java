@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Stack;
 
 /**
  * Created by FengSi on 2017/04/08 at 12:29.
@@ -10,6 +12,48 @@ public class Solution {
         System.out.println(solution.solution(A));
         int[] BA = {2, 3, 4, 2};
         System.out.println(solution.solution(BA));
+    }
+
+    public static int resolve(String expr) {
+        Stack<Integer> stack = new Stack<>();
+        int i = 0;
+        int j = 0;
+        while (j < expr.length()) {
+            j++;
+            if (j == expr.length() || expr.charAt(j) == ' ') {
+                String s = expr.substring(i, j);
+                if (s.equals("^")) {
+                    if (stack.isEmpty()) {
+                        return -1;
+                    } else {
+                        stack.push(stack.pop() + 1);
+                    }
+                } else if (s.equals("+")) {
+                    if (stack.size() < 2) {
+                        return -1;
+                    } else {
+                        int temp = stack.pop();
+                        stack.push(temp + stack.pop());
+                    }
+                } else if (s.equals("*")) {
+                    if (stack.size() < 2) {
+                        return -1;
+                    } else {
+                        int temp = stack.pop();
+                        stack.push(temp * stack.pop());
+                    }
+                } else {
+                    int temp = Integer.parseInt(s);
+                    if (stack.size() == 16) {
+                        return -2;
+                    } else {
+                        stack.push(temp);
+                    }
+                }
+                i = j + 1;
+            }
+        }
+        return stack.peek();
     }
 
     public int solution(int[] A) {
